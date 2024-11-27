@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    .sidebar {
+        position: fixed;
+        margin-top: 85px;
+        width: 22%;
+        height: 150vh;
+        overflow-y: auto;
+        left: 50px;
+        z-index: 1000;
+    }
+
+    .set-container {
+        position: fixed;
+        margin-left: 20%;
+        padding: 10px;
+        width: 80%;
+        height: 150vh;
+        z-index: 500;
+    }
+
+    .assist-btn {
+        width: 270px;
+        padding: 10px;
+        margin: 5px 0;
+        background-color: #a1a1a1;
+        color: white;
+        border: thick;
+        border-radius: 8px;
+        text-align: left;
+
+    }
+
+    .assist-btn:hover {
+        background-color: #777777;
+        color: white;
+        text-decoration: black;
+    }
+
+    .message {
+        padding: 2px;
+        margin-bottom: 2px;
+    }
+
+    #user_input {
+        width: 100%;
+        padding: 15px 20px;
+        margin-top: 10px;
+        font-size: 16px;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .input-forms {
+        display: block;
+        width: 80%;
+        margin: auto;
+        padding: 10px;
+    }
+
+    .instructions {
+        width: 500px;
+        height: 60px;
+        flex-grow: 1;
+        margin-right: 10px;
+    }
+
+    .submit-btn {
+        width: 150px;
+    }
+
+    .instructions,
+    .input-large {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .select2-container--default .select2-selection--multiple {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 5px;
+        box-sizing: border-box;
+    }
+
+    .select2-container .select2-selection--multiple .select2-selection__choice {
+        color: #333;
+        padding: 0 5px;
+        margin-top: 2px;
+        border: 1px solid #aaa;
+    }
+
+    .assistant-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+</style>
+
+<div class="sidebar">
+    <button class="assist-btn" onclick="createNewAssistant()">Create New Assistant</button>
+    {% for asst_id, details in assistants.items() %}
+    <div class="assistant-container">
+        <button class="assist-btn" onclick="selectAssistant('{{ asst_id }}')">
+            {{ details["name"] }}<br><small>{{ asst_id }}</small>
+        </button>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="set-container">
+    <div class="row justify-content-center">
+        <div class="col-12 text-center">
+            <h1>Customize your own FinSage</h1>
+            <hr>
+        </div>
+
+        <form method="post" action="/chat" class="input-forms">
+            <div class="form-row">
+                <label for="asst_name">Name</label> <br>
+                <input type="text" id="asst_name" name="asst_name" placeholder="Name your FinSage" class="input-large">
+            </div>
+
+            <div class="form-row">
+                <label for="instruction">Instructions</label> <br>
+                <textarea id="instruction" name="instruction" placeholder="Type an instruction..." rows="5"
+                    class="input-large"></textarea>
+            </div>
+
+            <div class="form-row">
+                <label for="tools">Tools</label> <br>
+                <select id="tools" name="tools[]" class="input-large" multiple>
+                    <option value="get_stock_data">Real Time Stock Data</option>
+                    <option value="technical_analysis">Technical Analysis on Individual Stock</option>
+                    <option value="machine_learning"> Machine Learning</option>
+                    <option value="manage_portfolio"> Portfolio Management </option>
+                    <option value="get_news">Latest News of Individual Stock</option>
+                    <!-- Add more tools as needed -->
+                </select>
+            </div>
+
+            <div class="form-row">
+                <label for="model">Model</label> <br>
+                <select id="model" name="model" class="input-large">
+                    <option value="gpt-3.5-turbo-0125">GPT-3.5-turbo(new)</option>
+                    <option value="gpt-3.5-turbo-1106">GPT-3.5-turbo-1106</option>
+                    <option value="gpt-4-turbo">GPT-4-turbo</option>
+                    <option value="gpt-4">GPT-4</option>
+                </select>
+            </div>
+            <div class="form-row">
+                <button type="submit" class="submit-btn">Create</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#tools').select2({
+            placeholder: "Select tools",
+            allowClear: true
+        });
+    });
+
+    function selectAssistant(assistantId) {
+        window.location.href = `/chat/${assistantId}`;
+    }
+
+    function createNewAssistant() {
+        window.location.href = '/chat';
+    }
+</script>
+
+{% endblock %}

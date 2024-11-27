@@ -1,0 +1,17 @@
+{
+    "b5d4045c3f466fa91fe2cc6abe79232a1a57cdf104f7a26e716e0a1e2789df78": {
+        "email": "ABC@google.com",
+        "password": "b5d4045c3f466fa91fe2cc6abe79232a1a57cdf104f7a26e716e0a1e2789df78",
+        "username": "ABC"
+    },
+    "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4": {
+        "email": "1234@gmail.com",
+        "password": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+        "username": "1234"
+    },
+    "c43139196d576427b9073922c4da86ff6d0ecff71d1a2c2ad9116ad2a1e8d50d": {
+        "email": "ch123@gmail.com",
+        "password": "9bf5bb3e4bd40e48b2a893d8928a13c0289f9a74404437ffc44070135c95f290",
+        "username": "Charles"
+    }
+}

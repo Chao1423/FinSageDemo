@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div id="chart"></div>
+<script>
+    var figures = {{ graphJSON | safe }};
+    var graphDiv = document.getElementById('chart');
+    Plotly.react(graphDiv, figures.data, figures.layout);
+</script>
+
+{% endblock %}

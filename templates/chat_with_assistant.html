@@ -1,0 +1,215 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    .sidebar {
+        margin-top: 85px;
+        width: 22%;
+        height: 150vh;
+        overflow-y: auto;
+        position: fixed;
+        left: 50px;
+        z-index: 1000;
+    }
+
+    .chat-container {
+        margin-left: 22%;
+        padding: 10px;
+        width: 80%;
+        height: 150vh;
+        position: fixed;
+        z-index: 500;
+    }
+
+    .assist-btn {
+        width: 270px;
+        padding: 10px;
+        margin: 5px 0;
+        background-color: #a1a1a1;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        text-align: left;
+    }
+
+    .assist-btn:hover {
+        background-color: #777777;
+        color: white;
+        text-decoration: black;
+    }
+
+    #chatbox {
+        max-height: 500px;
+        overflow-y: auto;
+        border: 1px solid #ccc;
+        padding: 10px;
+        background-color: #fdfdfd;
+    }
+
+    .message {
+        padding: 2px;
+        margin-bottom: 2px;
+    }
+
+    #user_input {
+        width: 100%;
+        padding: 15px 20px;
+        margin-top: 10px;
+        font-size: 16px;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .input-form {
+        display: flex;
+        align-items: stretch;
+        margin-top: 10px;
+    }
+
+    .input-large {
+        width: 890px;
+        height: 60px;
+        flex-grow: 1;
+        margin-right: 10px;
+    }
+
+    .submit-btn {
+        width: 100px;
+    }
+
+    .delete-btn {
+        background: none;
+        border: 2px solid red;
+        border-radius: 2px;
+        color: red;
+        cursor: pointer;
+    }
+
+    .delete-btn img {
+        width: 25px;
+        height: 25px;
+    }
+</style>
+
+<div class="sidebar">
+    <button class="assist-btn" onclick="createNewAssistant()">Create New Assistant</button>
+    {% for asst_id, details in assistants.items() %}
+    <div class="assistant-container">
+        <button class="assist-btn" onclick="selectAssistant('{{ asst_id }}')">
+            {{ details["name"] }}<br><small>{{ asst_id }}</small>
+        </button>
+        <button class="delete-btn" onclick="deleteAssistant('{{ asst_id }}')">
+            <img src="/static/img/dustbin.png" alt="Delete">
+        </button>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="chat-container">
+    <div class="row justify-content-center">
+        <div class="col-12 text-center">
+            <h1>Feel free to chat with FinSage</h1>
+            <hr>
+        </div>
+
+        <div id="chatbox">
+            {% for role, message in chat_history %}
+            <div class="message">
+                <p><strong>{{ role }}:</strong> {{ message }}</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <form method="post" action="/chat/{{ asst_id }}" class="input-form">
+            <textarea id="user_message" name="user_message" placeholder="Type a message..." rows="4"
+                class="input-large"></textarea>
+            <button type="submit" class="submit-btn">Send</button>
+        </form>
+    </div>
+</div>
+<div>
+    <button onclick="goToStockData('{{ asst_id }}')">View Stock Data</button>
+</div>
+<script>
+    $(document).ready(function () {
+        $(document).on('click', '.submit-btn', function (event) {
+            event.preventDefault();
+            sendMessage();
+        });
+    });
+    $(document).ready(function () {
+        if ($('#chatbox').length > 0) {
+            setTimeout(function () {
+                $('#chatbox').scrollTop($('#chatbox')[0].scrollHeight);
+            }, 100);
+        }
+    });
+    function goToStockData(asstId) {
+        window.location.href = `/stocks/${asstId}`;
+    }
+
+    function selectAssistant(assistantId) {
+        window.location.href = `/chat/${assistantId}`;
+    }
+
+    function createNewAssistant() {
+        window.location.href = '/chat';
+    }
+    function sendMessage() {
+        console.log("sendMessage called");
+        var message = $('#user_message').val();
+        var asstId = "{{ asst_id }}";
+        if (message.trim() !== '') {
+            $.ajax({
+                url: '/chat/' + asstId,
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ user_message: message }),
+                dataType: 'json',
+                success: function (data) {
+                    $('#chatbox').append('<div class="message">User: ' + message + '</div>');
+                    if (data.response) {
+                        $('#chatbox').append('<div class="message">System: ' + data.response + '</div>');
+                    }
+                    if (data.plotlyData) {
+                        var graphDiv = document.createElement('div');
+                        graphDiv.className = 'plotly-chart';
+                        $('#chatbox').append(graphDiv);
+                        Plotly.react(graphDiv, data.plotlyData.data, data.plotlyData.layout);
+                    }
+                    $('#user_message').val('');
+                    $('#chatbox').scrollTop($('#chatbox')[0].scrollHeight);
+                },
+                error: function (xhr, status, error) {
+                    console.log('Error: ' + error);
+                }
+            });
+        }
+    }
+
+
+    function deleteAssistant(asst_id) {
+        if (confirm('Are you sure you want to delete this assistant?')) {
+            $.ajax({
+                url: '/chat/' + asst_id + '/delete',
+                type: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.success) {
+                        alert('Assistant deleted successfully.');
+                        window.location.href = '/chat';
+                    } else {
+                        alert('Failed to delete assistant.');
+                    }
+                },
+                error: function () {
+                    alert('Error deleting assistant.');
+                }
+            });
+        }
+    }
+</script>
+
+{% endblock %}

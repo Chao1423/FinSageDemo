@@ -1,0 +1,20 @@
+{
+    "asst_lDH0lB98tIdkvGDgLiJ1HPRK": {
+        "thread_id": "thread_nJZ1vViV9sAQGytlU5TNNify",
+        "name": "FinSageAce",
+        "description": "You are a financial advisor providing stock data and visualization. You will also give technical analysis on individual stocks.",
+        "tools": [
+            "get_stock_data",
+            "technical_analysis"
+        ]
+    },
+    "asst_cgMc0nmjLAKDznscbJzZcwdS": {
+        "thread_id": "thread_nvVHykJi9eqLWVz5hjSRUIV8",
+        "name": "Assistant",
+        "description": "You can fetch stock data and visualization",
+        "tools": [
+            "get_stock_data",
+            "technical_analysis"
+        ]
+    }
+}

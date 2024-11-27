@@ -1,0 +1,80 @@
+{
+    "tools": [
+        {
+            "type": "function",
+            "function": {
+                "name": "get_stock_data",
+                "description": "Fetches stock data for a specific date or date range from finance data API.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "ticker": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "description": "List of stocks' tickers"
+                        },
+                        "start_date": {
+                            "type": "string",
+                            "format": "date",
+                            "description": "The start date of information needed, nessecary"
+                        },
+                        "end_date": {
+                            "type": "string",
+                            "format": "date",
+                            "description": "The end date of information needed, not nessecary"
+                        },
+                        "column": {
+                            "type": "string",
+                            "description": "Column selected"
+                        }
+                    },
+                    "required": [
+                        "ticker",
+                        "start_date",
+                        "column"
+                    ]
+                }
+            }
+        },
+        {
+            "type": "function",
+            "function": {
+                "name": "technical_analysis",
+                "description": "Use technical analysis to give a buy/sell/neutral recommendation of a NASDAQ stock. The function will also return the recommendations by each single indicator (oscillators: 11, moving_averages: 15)",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "ticker": {
+                            "type": "string",
+                            "description": "The ticker of a stock"
+                        }
+                    },
+                    "required": [
+                        "ticker"
+                    ]
+                }
+            }
+        },
+        {
+            "type": "function",
+            "function": {
+                "name": "get_news",
+                "description": "Get a list of stock news and summarize it",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "topic": {
+                            "type": "string",
+                            "description": "The ticker of a stock of retrieving news"
+                        }
+                    },
+                    "required": [
+                        "topic"
+                    ]
+                }
+            }
+        }
+    ]
+}

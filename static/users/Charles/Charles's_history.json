@@ -1,0 +1,22 @@
+{
+    "asst_lDH0lB98tIdkvGDgLiJ1HPRK": [
+        [
+            "Charles",
+            "Hi, would you please give me the stock price of Microsoft in March 2024?"
+        ],
+        [
+            "FinSageAce",
+            "The closing stock prices of Microsoft in March 2024 are as follows:\n\n- March 1, 2024: $415.50\n- March 2, 2024: $414.92\n- March 3, 2024: $402.65\n- March 4, 2024: $402.09\n- March 5, 2024: $409.14\n- March 6, 2024: $406.22\n- March 7, 2024: $404.52\n- March 8, 2024: $415.28\n- March 9, 2024: $415.10\n- March 10, 2024: $425.22\n- March 11, 2024: $416.42\n- March 12, 2024: $417.32\n- March 13, 2024: $421.41\n- March 14, 2024: $425.23\n- March 15, 2024: $429.37\n- March 16, 2024: $428.74\n- March 17, 2024: $422.86\n- March 18, 2024: $421.65\n- March 19, 2024: $421.43\n- March 20, 2024: $420.72\n\nFor a visualization of the stock prices, you can check out the [graph here](127.0.0.1/stocks)."
+        ]
+    ],
+    "asst_cgMc0nmjLAKDznscbJzZcwdS": [
+        [
+            "Charles",
+            "Give me close price of Microsoft in March 2024"
+        ],
+        [
+            "Assistant",
+            "The close prices of Microsoft (MSFT) in March 2024 are as follows:\n- March 1, 2024: $415.50\n- March 2, 2024: $414.92\n- March 3, 2024: $402.65\n- March 4, 2024: $402.09\n- March 5, 2024: $409.14\n- March 6, 2024: $406.22\n- March 7, 2024: $404.52\n- March 8, 2024: $415.28\n- March 9, 2024: $415.10\n- March 10, 2024: $425.22\n- March 11, 2024: $416.42\n- March 12, 2024: $417.32\n- March 13, 2024: $421.41\n- March 14, 2024: $425.23\n- March 15, 2024: $429.37\n- March 16, 2024: $428.74\n- March 17, 2024: $422.86\n- March 18, 2024: $421.65\n- March 19, 2024: $421.43\n- March 20, 2024: $420.72\n\nFor better visualization of this data, you can check out the graph [here](127.0.0.1/stocks)."
+        ]
+    ]
+}

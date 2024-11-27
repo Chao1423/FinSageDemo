@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<br>
+<br>
+        
+<div class="container">
+	<div class="row justify-content-center">
+		<div class="col-12 text-center">
+			<h3> Welcome, {{name}}!</h3>
+		</div>
+	</div>
+
+    <br>
+    <br>
+
+	<div class="row justify-content-center">
+        <div class="col-8 text-center">
+            <form method="post">
+            <table class="table mx-auto w-auto">
+            <tbody>
+                <style>
+                    ::placeholder {
+                      color: black;
+                      opacity: 1; 
+                    }
+                </style>
+                <tr>
+                <th>Username</th>
+                <td>
+                    <input type="username" class="form-control-plaintext text-center" 
+                     placeholder="{{current_user.username}}" readonly>
+                </td>
+                <td></td>
+                </tr>
+
+                <tr>
+                <th>Email</th>
+                {% if edit == "No" %}
+                <td>
+                    <input type="email" class="form-control-plaintext text-center"
+                     placeholder="{{current_user.email}}" readonly>
+                </td>
+                <td>
+                    <button type="submit" id="editEmail"
+                            name="editEmail"
+                            class="btn btn-outline-secondary"
+                            style="color: skyblue"> 
+                    <i class="bi bi-pen"></i> Edit
+                    </button>
+                </td>
+                {% else %}
+                <td>
+                <input type="email" class="form-control text-center"
+                 name="email" style="color: black"
+                 placeholder="{{current_user.email}}">
+                </td>
+                <td>
+                    <button type="submit" id="confirmEmail"
+                            name="confirmEmail"
+                            class="btn btn-success"
+                            style="color: lightgreen"> 
+                    <i class="bi bi-check-circle"></i> Save
+                    </button>
+                </td>
+                {% endif %}
+                </tr>
+
+            </tbody>
+            </table>
+            <button type="submit" name="deleteAccount" class="btn btn-danger" style="margin-top: 20px;">
+                Delete Account
+            </button>
+            </form>
+        </div>
+	</div>
+
+</div>
+
+{% endblock %}
